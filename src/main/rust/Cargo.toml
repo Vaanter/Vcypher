@@ -1,0 +1,10 @@
+[package]
+name = "rust"
+version = "1.0.0"
+authors = ["WTroll <WTrol25@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+num-bigint = "0.3"

@@ -1,0 +1,42 @@
+plugins {
+  id 'java'
+  id "io.freefair.lombok" version "5.1.0"
+  id "net.ltgt.errorprone" version "1.2.1"
+}
+
+group 'com.vb'
+version '1'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "com.google.guava:guava:29.0-jre"
+  implementation 'com.google.flogger:flogger:0.5.1'
+  implementation 'com.google.flogger:flogger-slf4j-backend:0.5.1'
+
+  errorprone("com.google.errorprone:error_prone_core:2.4.0")
+
+  testCompile 'org.junit.jupiter:junit-jupiter-engine:5.7.0-M1'
+}
+
+test {
+  useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+  options.errorprone {
+    disableWarningsInGeneratedCode = true
+    ignoreUnknownCheckNames = true
+    allErrorsAsWarnings = true
+    // workaround for: https://github.com/google/error-prone/issues/780
+    errorproneArgs = ['-Xep:ParameterName:OFF',
+                      '-Xep:FallThrough:OFF',
+                      '-Xep:FunctionalInterfaceClash:OFF',
+                      '-Xep:AssertionFailureIgnored:OFF',
+                      '-Xlint:unchecked',
+                      '-Xlint:deprecation'
+    ]
+  }
+}
