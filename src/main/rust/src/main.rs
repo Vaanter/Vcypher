@@ -1,5 +1,7 @@
 mod vcypher;
 
+use base64;
+
 fn main() {
   use std::env;
 
@@ -10,4 +12,6 @@ fn main() {
   };
   let result = vcypher::vcypher(input.to_string());
   println!("{}", result);
+  let base64_result = base64::encode(result);
+  println!("{}", base64_result);
 }
