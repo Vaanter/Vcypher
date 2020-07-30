@@ -51,7 +51,7 @@ pub fn vcypher(input: &str) -> String {
 
   let mut encrypted = rot_values.pop_back().unwrap_or(String::new()).to_string();
 
-  for i in 1..rot_values.len() {
+  for i in 1..rot_values.len() / 2 + 1 {
     for _ in 0..2 {
       if i % 2 == 0 {
         encrypted += rot_values.pop_back().unwrap_or(String::new()).as_str();

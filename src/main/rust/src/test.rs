@@ -1,6 +1,7 @@
 use crate::vcypher;
-use std::fs;
 use std::collections::HashMap;
+use std::fs;
+use std::time::SystemTime;
 
 #[allow(dead_code)]
 pub fn collision() {
@@ -10,12 +11,21 @@ pub fn collision() {
     let result = vcypher::vcypher(&input_string);
     if occurences.contains_key(&result) {
       let inputs = occurences.get_mut(&result).unwrap();
-      (*inputs).push(input_string);      
+      (*inputs).push(input_string);
     } else {
       occurences.insert(result, vec![input_string]);
     }
   }
   println!("{:#?}", occurences);
+}
+
+#[allow(dead_code)]
+pub fn file_as_input_test() {
+  let input = read_from_file();
+  let start = SystemTime::now();
+  let result = vcypher::vcypher(&input);
+  println!("{}ns", start.elapsed().unwrap().as_nanos());
+  write_to_file(&result);
 }
 
 #[allow(dead_code)]
@@ -29,6 +39,6 @@ pub fn write_to_file(output: &str) {
 
   match result {
     Ok(_) => (),
-    Err(err) => panic!(err)
+    Err(err) => panic!(err),
   };
 }

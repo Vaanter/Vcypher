@@ -6,8 +6,8 @@ mod test;
 
 fn main() {
   // test::collision();
-  // test::write_to_file(&vcypher::vcypher(&test::read_from_file()));
-  encode_arg();
+  test::file_as_input_test();
+  // encode_arg();
 }
 
 #[allow(dead_code)]

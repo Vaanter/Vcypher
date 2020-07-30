@@ -40,14 +40,8 @@ def vcypher(inputs: str) -> str:
     OK = rot_values.pop(-1)
 
     for i in range(1, len(rot_values) // 2 + 1):
-        print(i)
         for _ in range(2):
             check = i % 2 - 1
             OK += rot_values.pop(check)
 
-    for i in OK:
-        if i == "0":
-            OK = OK[1:]
-            continue
-        break
-    return OK
+    return str(int(OK))
