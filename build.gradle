@@ -1,11 +1,13 @@
 plugins {
   id 'java'
+  id 'pmd'
   id "io.freefair.lombok" version "5.1.0"
   id "net.ltgt.errorprone" version "1.2.1"
+  id "com.github.johnrengelman.shadow" version "6.0.0"
 }
 
 group 'com.vb'
-version '1'
+version '1.1.0'
 
 repositories {
   mavenCentral()
@@ -18,7 +20,7 @@ dependencies {
 
   errorprone("com.google.errorprone:error_prone_core:2.4.0")
 
-  testCompile 'org.junit.jupiter:junit-jupiter-engine:5.7.0-M1'
+  testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0-M1'
 }
 
 test {
@@ -26,6 +28,7 @@ test {
 }
 
 tasks.withType(JavaCompile) {
+  options.encoding = 'UTF-8'
   options.errorprone {
     disableWarningsInGeneratedCode = true
     ignoreUnknownCheckNames = true
@@ -38,5 +41,13 @@ tasks.withType(JavaCompile) {
                       '-Xlint:unchecked',
                       '-Xlint:deprecation'
     ]
+  }
+}
+
+shadowJar {
+  archiveBaseName = 'Vcypher'
+  classifier = ''
+  manifest {
+    attributes 'Main-Class': 'com.vb.vcypher.Main'
   }
 }
