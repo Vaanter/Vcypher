@@ -44,5 +44,5 @@ pub fn vcypher(payload: &str) -> String {
       }
     }
   }
-  return if encrypted == "" {encrypted} else {encrypted.parse::<BigUint>().unwrap().to_string()}
+  if encrypted == "" {encrypted} else {encrypted.parse::<BigUint>().unwrap().to_string()}
 }
