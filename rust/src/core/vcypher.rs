@@ -24,9 +24,9 @@ pub fn vcypher(payload: &str) -> String {
   }
 
   let mut pre_rot: Vec<String> = zero_curve.iter().map(|x| x.to_string()).collect();
-
-  {
+  if one_counts.len() > 0 {
     let one_counts_product: BigUint = one_counts.iter().product();
+    
     pre_rot.push(one_counts_product.to_string());
   }
 
@@ -44,5 +44,5 @@ pub fn vcypher(payload: &str) -> String {
       }
     }
   }
-  encrypted.parse::<BigUint>().unwrap().to_string()
+  return if encrypted == "" {encrypted} else {encrypted.parse::<BigUint>().unwrap().to_string()}
 }
