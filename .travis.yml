@@ -20,6 +20,8 @@ matrix:
         - nightly
       before_script:
         - cd rust
+      script:
+        - cargo test
       jobs:
         allow_failures:
           - rust: nightly

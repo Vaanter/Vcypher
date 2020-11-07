@@ -1,2 +1,3 @@
 *.* text eol=crlf
+/java/gradle/wrapper/gradle-wrapper.jar text eol=lf
 LICENSE text eol=crlf
