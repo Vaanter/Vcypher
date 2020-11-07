@@ -7,12 +7,9 @@ mod vcypher;
 mod utils;
 
 fn main() {
-  // utils::collision();
-  // utils::file_as_input_test();
   encode_arg();
 }
 
-#[allow(dead_code)]
 fn encode_arg() {
   let args: Vec<String> = env::args().collect();
   let input = match args.get(1) {

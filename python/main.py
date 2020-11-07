@@ -5,7 +5,9 @@ from pprint import pprint
 
 
 if __name__ == '__main__':
-    payload = sys.argv[1]
+    payload = ""
+    if len(sys.argv) > 2:
+        payload = sys.argv[1]
     result = Vcypher.vcypher(payload)
     pprint(int(result))
     base64_bytes = base64.b64encode(result.encode("utf-8"))

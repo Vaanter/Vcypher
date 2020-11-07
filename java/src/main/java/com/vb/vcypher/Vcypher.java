@@ -1,18 +1,23 @@
 package com.vb.vcypher;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
-import com.google.common.base.CharMatcher;
 import java.math.BigInteger;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Vcypher {
+public final class Vcypher {
 
-  public static final String encode(String payload) {
+  /**
+   * Encodes input with vcypher algorithm.
+   * @param payload String to be encoded.
+   * @return Encoded payload.
+   */
+  public static String encode(String payload) {
     ArrayList<String> binaries = new ArrayList<>();
     ArrayList<Integer> oneCounts = new ArrayList<>();
 
@@ -39,28 +44,31 @@ public class Vcypher {
       zeroCurve.add(zeroCount);
     }
 
-    ArrayList<String> preRot = zeroCurve.stream().map(String::valueOf).collect(Collectors.toCollection(ArrayList::new));
+    ArrayDeque<String> preRot = zeroCurve
+        .stream()
+        .map(String::valueOf)
+        .collect(Collectors.toCollection(ArrayDeque::new));
 
     if (oneCounts.size() > 0) {
       BigInteger x = BigInteger.valueOf(1);
       for (Integer anOneCount : oneCounts) {
         x = x.multiply(BigInteger.valueOf(anOneCount));
       }
-      preRot.add(x.toString());
+      preRot.add(new StringBuilder(x.toString()).reverse().toString());
     }
 
-    // reverse values
-    ArrayDeque<String> rotValues = preRot.stream().map(x -> new StringBuilder(x).reverse().toString())
-        .collect(Collectors.toCollection(ArrayDeque::new));
-
     ArrayList<String> cipher = new ArrayList<>();
-    cipher.add(rotValues.pollLast());
-    for (int i = 0, l = rotValues.size() / 2 + 1; i < l; i++) {
+    cipher.add(preRot.pollLast());
+    for (int i = 0, l = preRot.size() / 2 + 1; i < l; i++) {
       for (int j = 0; j < 2; j++) {
+        String value;
         if (i % 2 != 0) {
-          cipher.add(rotValues.pollLast());
+          value = preRot.pollLast();
         } else {
-          cipher.add(rotValues.poll());
+          value = preRot.poll();
+        }
+        if (value != null) {
+          cipher.add(new StringBuilder(value).reverse().toString());
         }
       }
     }

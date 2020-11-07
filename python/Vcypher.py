@@ -6,7 +6,6 @@ def vcypher(payload: str) -> str:
     one_count_per_binary = [x.count("1") for x in binaries]
 
     all_bin = "".join(binaries)
-    
     pre_rot = []
 
     for zeros in [x for x in all_bin.split("1") if x != ""]:
@@ -15,13 +14,15 @@ def vcypher(payload: str) -> str:
             length += pre_rot[-1]
         pre_rot.append(length)
 
-    fp1 = math.prod(one_count_per_binary)
-    
-    pre_rot.append(fp1)
+    if len(one_count_per_binary) > 0:
+        fp1 = math.prod(one_count_per_binary)
+        pre_rot.append(fp1)
 
     rot_values = [str(x)[::-1] for x in pre_rot]
 
-    OK = rot_values.pop(-1)
+    OK = ""
+    if rot_values:
+        OK += rot_values.pop(-1)
 
     for i in range(1, len(rot_values) // 2 + 2):
         for _ in range(2):
@@ -29,4 +30,4 @@ def vcypher(payload: str) -> str:
                 check = i % 2 - 1
                 OK += rot_values.pop(check)
 
-    return str(int(OK))
+    return "" if not OK else str(int(OK))
