@@ -1,8 +1,8 @@
 plugins {
   id 'java'
-  id 'pmd'
-  id "net.ltgt.errorprone" version "1.2.1"
-  id "com.github.johnrengelman.shadow" version "6.0.0"
+  id "com.github.ben-manes.versions" version "0.36.0"
+  id "net.ltgt.errorprone" version "1.3.0"
+  id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
 group 'com.vb'
@@ -13,11 +13,11 @@ repositories {
 }
 
 dependencies {
-  implementation "com.google.guava:guava:29.0-jre"
+  implementation "com.google.guava:guava:30.0-jre"
 
   errorprone("com.google.errorprone:error_prone_core:2.4.0")
 
-  testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0-M1'
+  testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
 test {
