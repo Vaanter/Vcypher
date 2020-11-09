@@ -1,7 +1,9 @@
 matrix:
   include:
     - language: python
-      python: "3.8"
+      python:
+        - "3.8"
+        - "3.6"
       before_script:
         - cd python
       script:
@@ -10,6 +12,7 @@ matrix:
     - language: java
       jdk:
         - openjdk11
+        - openjdk8
       before_script:
         - cd java
 
