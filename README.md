@@ -8,26 +8,31 @@ This repo contains implementation in Python, Rust, Java and Dart.
 
 
 ## How does vcypher work
-##### Array should be understood as variable length array like data structure in this context.
-> <ol>
-> <li>Create 2 arrays.</li>
-> <li>Convert each char to byte and append it to array 1.</li>
-> <li>Count each bit with value of 1 per byte and append it to array 2.</li>
-> <li>Concatenate all bytes from array 1, split the string on 1s, get length of each part.</li>
-> <li>Multiply all counts from step 2, remove trailing 0s and append the result to step 3.</li>
-> <li>Reverse each number. (Any leading 0 is kept.)</li>
-> <li>Pop last value and append it to new variable length array like data structure.</li>
-> <li>Pop first value and append it to array from step 6 twice.</li>
-> <li>Pop last value and append it to array from step 6 twice.</li>
-> <li>Repeat steps 7 and 8 until original array is empty.</li>
-> <li>Concatenate all values from array from step 6 and return it.</li>
-> </ol> 
+<ol>
+<li>Get binary representation of each character in input with at least 8 bits.</li>
+<li>Count 0s separated by 1s and add previous count to it (ignore if first count).</li>
+<li>Count all 1s per character, multiple them together, remove trailing 0s. Append it to the end.</li>
+<li>Reverse every number.</li>
+<li>Move last number to the start.</li>
+<li>*Repeat until all numbers moved* Move first 2 then last 2.</li>
+<li>Concatenate everything together.</li>
+</ol>
+
+#### Example
+Input: ABC
+<ol>
+<li> 01000001 01000010 01000011 </li>
+<li> 1 5 1 4 2 4 -> 1 6 7 11 13 17 </li>
+<li> 2 2 3 -> 12 </li>
+<li> 1 6 7 11 13 17 12 -> 1 6 7 11 31 71 21 </li>
+<li> 21 1 6 71 31 7 11 -> 21167131711 </li>
+</ol>
 
 ## Getting started
 * Python
 >  *Python 3.8 or higher is required*
 > ```sh
-> python3 main <your input>
+> python3 main.py <your input> (--base64)
 > ```
 
 * Java
@@ -39,7 +44,7 @@ This repo contains implementation in Python, Rust, Java and Dart.
 > ```
 > Running:
 > ```sh
-> ./path/to/jar/Vcypher-<$version>.jar <your input>
+> java -jar /path/to/jar/Vcypher-<$version>.jar <your input>
 > ```
 
 * Rust
@@ -52,6 +57,9 @@ This repo contains implementation in Python, Rust, Java and Dart.
 > ```sh
 > ./path/to/bin/vcypher(.exe) <your input> (--base64)
 > ```
+
+## Problems
+Collisions are common. 
 
 ## Contribution
 Any contributions are welcome.
