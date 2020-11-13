@@ -1,30 +1,53 @@
-matrix:
+os: linux
+dist: focal
+language: shell
+
+jobs:
   include:
     - language: python
-      python:
-        - 3.8
+      python: 3.8
+      before_script:
+        - cd python
+      script:
+        - python3 vcypher_test.py
+    
+    - language: python
+      python: 3.9
       before_script:
         - cd python
       script:
         - python3 vcypher_test.py
 
     - language: java
-      jdk:
-        - openjdk9
-        - openjdk11
+      jdk: openjdk9
+      before_script:
+        - cd java
+
+    - language: java
+      jdk: openjdk11
       before_script:
         - cd java
 
     - language: rust
-      rust:
-        - stable
-        - beta
-        - nightly
+      rust: stable
       before_script:
         - cd rust
       script:
         - cargo test
-      jobs:
-        allow_failures:
-          - rust: nightly
-        fast_finish: true
+
+    - language: rust
+      rust: beta
+      before_script:
+        - cd rust
+      script:
+        - cargo test
+
+    - language: rust
+      rust: nightly
+      before_script:
+        - cd rust
+      script:
+        - cargo test
+  allow_failures:
+    - rust: nightly
+  fast_finish: true
