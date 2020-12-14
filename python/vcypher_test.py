@@ -21,6 +21,9 @@ class TestVcypher(unittest.TestCase):
         self.assertEqual(Vcypher.vcypher("í"), "612")
         self.assertEqual(Vcypher.vcypher("é"), "513")
 
+    def test_non_latin_characters(self):
+        self.assertEqual(Vcypher.vcypher("磨"), "8347")
+
 
 if __name__ == '__main__':
     unittest.main()

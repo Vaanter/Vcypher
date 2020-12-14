@@ -10,7 +10,7 @@ jobs:
         - cd python
       script:
         - python3 vcypher_test.py
-    
+
     - language: python
       python: 3.9
       before_script:

@@ -75,4 +75,9 @@ mod tests {
     assert_eq!(vcypher::vcypher("í"), "612");
     assert_eq!(vcypher::vcypher("é"), "513");
   }
+
+  #[test]
+  fn test_non_latin_characters() {
+    assert_eq!(vcypher::vcypher("磨"), "8347");
+  }
 }

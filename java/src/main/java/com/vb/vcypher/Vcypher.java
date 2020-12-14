@@ -9,15 +9,19 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
+import javax.inject.Singleton;
 
+@Singleton
 public final class Vcypher {
-
   /**
    * Encodes input with vcypher algorithm.
+   *
    * @param payload String to be encoded.
    * @return Encoded payload.
    */
-  public static String encode(String payload) {
+  @Nonnull
+  public String encode(@Nonnull String payload) {
     ArrayList<String> binaries = new ArrayList<>();
     ArrayList<Integer> oneCounts = new ArrayList<>();
 
