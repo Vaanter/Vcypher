@@ -36,11 +36,11 @@ Input: ABC
 > ```
 
 * Java
-> *Java 9 or higher is required*\
+> *Java 11 or higher is required*\
 >
 > Building:
 > ```sh
-> ./gradlew shadowJar
+> ./gradlew build
 > ```
 > Running:
 > ```sh
