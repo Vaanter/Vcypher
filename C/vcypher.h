@@ -10,7 +10,7 @@
 
 char *vcypher(const wchar_t *input);
 
-void free_char_double_ptr(char **arr, size_t size);
+void free_array_contents(char **arr, size_t size);
 
 char *process_character(wchar_t character, int *ones);
 

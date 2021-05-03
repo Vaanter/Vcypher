@@ -8,12 +8,11 @@
 #include "vcypher.h"
 
 char *vcypher(const wchar_t *input) {
-  if (input == NULL || wcscmp(L"", input) == 0) {
+  if (input == NULL || wcslen(input) == 0) {
     return "";
   }
   const size_t size = wcslen(input);
-
-  char **binaries = calloc(size, sizeof(char *));
+  char *binaries[size];
   size_t binaries_size = 0;
   int one_counts[size];
   size_t one_counts_size = 0;
@@ -30,7 +29,7 @@ char *vcypher(const wchar_t *input) {
   }
 
   char *all_bin = concatenate(binaries, binaries_size);
-  free_char_double_ptr(binaries, binaries_size);
+  free_array_contents(binaries, binaries_size);
   size_t counts_size = 0;
   unsigned int *zero_counts = count_zeros(all_bin, &counts_size);
   free(all_bin);
@@ -45,7 +44,8 @@ char *vcypher(const wchar_t *input) {
   }
 
   char *buffer = cipher(zero_counts_string, counts_size);
-  free_char_double_ptr(zero_counts_string, counts_size);
+  free_array_contents(zero_counts_string, counts_size);
+  free(zero_counts_string);
 
   return buffer;
 }
@@ -146,7 +146,7 @@ char *multiply_ones_together(const int *one_counts, const size_t one_counts_size
 char **convert_arr_to_string(const unsigned int *zero_counts, const size_t counts_size) {
   char **zero_counts_string = calloc(counts_size + 1, sizeof(char *));
   for (int i = 0; i < counts_size; i++) {
-    size_t num_as_string_size = floor(log10(zero_counts[i])) + 1;
+    size_t num_as_string_size = (size_t) floor(log10(zero_counts[i])) + 1;
     char *buffer = calloc(num_as_string_size + 1, sizeof(char));
     snprintf(buffer, num_as_string_size + 1, "%d", zero_counts[i]);
     reverse(buffer);
@@ -156,7 +156,7 @@ char **convert_arr_to_string(const unsigned int *zero_counts, const size_t count
 }
 
 char *cipher(char **zero_counts_string, size_t counts_size) {
-  int position_back = counts_size - 2;
+  int position_back = (int) counts_size - 2;
   int position_front = 0;
   size_t buffer_size = 0;
   for (int i = 0; i < counts_size; i++) {
@@ -178,9 +178,8 @@ char *cipher(char **zero_counts_string, size_t counts_size) {
   return buffer;
 }
 
-void free_char_double_ptr(char **arr, size_t size) {
+void free_array_contents(char **arr, size_t size) {
   for (int i = 0; i < size; i++) {
     free(arr[i]);
   }
-  free(arr);
 }
