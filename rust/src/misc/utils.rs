@@ -37,8 +37,7 @@ pub fn read_from_file() -> String {
 pub fn write_to_file(output: &str) {
   let result = fs::write("output.txt", output.to_string());
 
-  match result {
-    Ok(_) => (),
-    Err(err) => panic!(err),
-  };
+  if let Err(err) = result {
+    panic!("Error writing to file, {}", err);
+  }
 }
