@@ -1,36 +1,33 @@
-use base64;
-use clap::{App, Arg};
+use base64::Engine;
+use clap::Parser;
 
-#[path = "./core/vcypher.rs"]
-mod vcypher;
 #[path = "./misc/utils.rs"]
 mod utils;
+#[path = "./core/vcypher.rs"]
+mod vcypher;
+
+#[derive(Parser)]
+#[command(
+  author = "Valentín Bolfík <wtrol25@gmail.com>",
+  version,
+  about = "Encodes input using the vcypher algorithm"
+)]
+struct Args {
+  #[arg(short, long, default_value = "false")]
+  base64: bool,
+  inputs: Vec<String>,
+}
 
 fn main() {
   encode_arg();
 }
 
 fn encode_arg() {
-  let matches = App::new("Vcypher")
-    .version("1.0")
-    .author("Valentín Bolfík <wtrol25@gmail.com>")
-    .about("Encodes input using the vcypher algorithm")
-    .arg(Arg::with_name("base64")
-      .short("b")
-      .long("base64")
-      .takes_value(false)
-      .help("Outputs the result in base64 encoding."))
-    .arg(Arg::with_name("INPUTS")
-      .required(true)
-      .multiple(true)
-      .index(1)
-      .help("Space separated list of inputs to encode."))
-    .get_matches();
-  let inputs = matches.values_of("INPUTS").unwrap();
-  for input in inputs {
+  let args = Args::parse();
+  for input in &args.inputs {
     let result = vcypher::vcypher(input);
-    if matches.is_present("base64") {
-      let base64_result = base64::encode(result);
+    if args.base64 {
+      let base64_result = base64::prelude::BASE64_STANDARD_NO_PAD.encode(result);
       println!("{}", base64_result);
     } else {
       println!("{}", result);

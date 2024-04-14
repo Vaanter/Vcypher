@@ -8,8 +8,8 @@ license-file = "../LICENSE"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-num-bigint = "0.4"
-base64 = "0.13.0"
-clap = "2.33.3"
+num-bigint = "0.4.4"
+base64 = "0.21.4"
+clap = { version = "4.4.4", features = ["derive"] }
 
 

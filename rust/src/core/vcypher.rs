@@ -15,7 +15,7 @@ pub fn vcypher(payload: &str) -> String {
   let mut zero_curve: Vec<usize> = vec![];
   {
     let all_bin = binaries.join("");
-    let zero_split: Vec<&str> = all_bin.split("1").filter(|x| x != &"").collect();
+    let zero_split: Vec<&str> = all_bin.split("1").filter(|&x| x != "").collect();
 
     for zeros in zero_split {
       let length = zeros.len() + zero_curve.last().unwrap_or(&0);
@@ -26,7 +26,7 @@ pub fn vcypher(payload: &str) -> String {
   let mut pre_rot: Vec<String> = zero_curve.iter().map(|x| x.to_string()).collect();
   if one_counts.len() > 0 {
     let one_counts_product: BigUint = one_counts.iter().product();
-    
+
     pre_rot.push(one_counts_product.to_string());
   }
 
@@ -44,7 +44,11 @@ pub fn vcypher(payload: &str) -> String {
       }
     }
   }
-  if encrypted == "" {encrypted} else {encrypted.parse::<BigUint>().unwrap().to_string()}
+  if encrypted == "" {
+    encrypted
+  } else {
+    encrypted.parse::<BigUint>().unwrap().to_string()
+  }
 }
 
 #[cfg(test)]
